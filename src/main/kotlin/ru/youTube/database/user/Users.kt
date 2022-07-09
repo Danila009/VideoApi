@@ -5,6 +5,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import ru.youTube.common.Result
+import ru.youTube.common.Result.*
 import ru.youTube.database.user.dto.AuthorizationUserDTO
 import ru.youTube.database.user.dto.RegistrationUserDTO
 import ru.youTube.database.user.dto.UserDTO
@@ -23,23 +24,36 @@ object Users : Table("user"), UserDAO {
         return try {
             val userResult =
                 select { login eq user.login }.singleOrNull()?.mapToUser()
-                    ?: return Result.Error("user == null & login")
+                    ?: return Error("user == null & login")
 
             if (userResult.password != user.password)
-                return Result.Error("Неверный пароль")
+                return Error("Неверный пароль")
 
-            Result.Success(data = userResult.id)
+            Success(data = userResult.id)
         }catch (e:Exception){
-            Result.Error(message = e.message.toString())
+            Error(message = e.message.toString())
         }
     }
 
-    override fun registration(user: RegistrationUserDTO): Int {
-        return insert {
-            it[username] = user.username
-            it[login] = user.login
-            it[password] = user.password
-        }[id]
+    override fun registration(user: RegistrationUserDTO): Result<Int> {
+        return try {
+
+            val userResult =
+                select { login eq user.login }.singleOrNull()?.mapToUser()
+
+            if (userResult != null)
+                return Error("Login занят")
+
+            val userId = insert {
+                it[username] = user.username
+                it[login] = user.login
+                it[password] = user.password
+            }[id]
+
+            Success(userId)
+        }catch (e:Exception){
+            Error(e.message.toString())
+        }
     }
 
     override fun getUserInfo(id: Int): UserDTO? {

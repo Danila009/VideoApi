@@ -5,13 +5,19 @@ import ru.youTube.auth.TokenProvider
 import ru.youTube.common.Result
 import ru.youTube.database.user.UserDAO
 import ru.youTube.database.user.dto.AuthorizationUserDTO
+import ru.youTube.database.user.dto.RegistrationUserDTO
 import ru.youTube.features.user.model.AuthorizationResult
+import ru.youTube.features.user.model.RegistrationResult
 import ru.youTube.features.user.model.UserInfoResult
 
 class UserControllerImpl(
     private val dao:UserDAO,
     private val tokenProvider: TokenProvider
 ) : UserController {
+
+    override suspend fun getUserPhoto(id: Int) {
+
+    }
 
     override suspend fun getUserInfo(id: Int): UserInfoResult= newSuspendedTransaction {
         return@newSuspendedTransaction try {
@@ -43,6 +49,23 @@ class UserControllerImpl(
                     )
                 }
             }
+        }
+    }
+
+    override suspend fun registration(user: RegistrationUserDTO): RegistrationResult =
+        newSuspendedTransaction {
+            return@newSuspendedTransaction when(val userIdResult = dao.registration(user)){
+                is Result.Error -> {
+                    RegistrationResult(
+                        error = userIdResult.message
+                    )
+                }
+                is Result.Success -> {
+                    val token = tokenProvider.createToken(userIdResult.data!!)
+                    RegistrationResult(
+                        token = token
+                    )
+                }
         }
     }
 }

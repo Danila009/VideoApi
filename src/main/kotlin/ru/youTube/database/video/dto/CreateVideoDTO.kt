@@ -4,5 +4,6 @@ package ru.youTube.database.video.dto
 data class CreateVideoDTO(
     val title:String,
     val previewsUrl:String,
-    val videoUrl:String
+    val videoUrl:String,
+    val idChannel:Int
 )

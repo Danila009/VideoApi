@@ -9,7 +9,7 @@ interface UserDAO {
 
     fun authorization(user: AuthorizationUserDTO):Result<Int?>
 
-    fun registration(user: RegistrationUserDTO):Int
+    fun registration(user: RegistrationUserDTO):Result<Int>
 
     fun getUserInfo(id:Int) : UserDTO?
 }
