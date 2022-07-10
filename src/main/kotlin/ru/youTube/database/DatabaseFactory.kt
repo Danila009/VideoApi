@@ -6,6 +6,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import ru.youTube.database.channel.Channels
 import ru.youTube.database.user.Users
 import ru.youTube.database.video.Videos
+import ru.youTube.database.videoComment.VideoComments
 
 object DatabaseFactory {
 
@@ -19,9 +20,12 @@ object DatabaseFactory {
             password = password,
             user = username
         )
+
         transaction(database) {
+            SchemaUtils.createDatabase()
             SchemaUtils.create(Channels)
             SchemaUtils.create(Videos)
+            SchemaUtils.create(VideoComments)
             SchemaUtils.create(Users)
         }
     }

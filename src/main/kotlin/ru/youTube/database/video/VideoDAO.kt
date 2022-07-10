@@ -1,13 +1,13 @@
 package ru.youTube.database.video
 
 import ru.youTube.database.video.dto.CreateVideoDTO
-import ru.youTube.database.video.model.Video
+import ru.youTube.database.video.model.VideoModel
 
 interface VideoDAO {
 
-    fun getVideos():List<Video>
+    fun getVideos():List<VideoModel>
 
-    fun getVideoById(id:Int):Video?
+    fun getVideoById(id:Int):VideoModel
 
     fun deleteById(id: Int)
 

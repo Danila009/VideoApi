@@ -4,17 +4,17 @@ import io.ktor.http.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import ru.youTube.database.video.VideoDAO
 import ru.youTube.database.video.dto.CreateVideoDTO
-import ru.youTube.database.video.model.Video
+import ru.youTube.database.video.model.VideoModel
 
 class VideoControllerImpl (
     private val videoDAO:VideoDAO
 ) : VideoController {
 
-    override suspend fun getVideos(): List<Video> = newSuspendedTransaction {
+    override suspend fun getVideos(): List<VideoModel> = newSuspendedTransaction {
         return@newSuspendedTransaction videoDAO.getVideos()
     }
 
-    override suspend fun getVideoById(id:Int): Video? = newSuspendedTransaction {
+    override suspend fun getVideoById(id:Int): VideoModel = newSuspendedTransaction {
         return@newSuspendedTransaction videoDAO.getVideoById(id)
     }
 

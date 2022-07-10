@@ -23,8 +23,9 @@ class UserControllerImpl(
         return@newSuspendedTransaction try {
             val response = dao.getUserInfo(id)
             UserInfoResult(
-                login = response?.login,
-                username = response?.username
+                login = response.login,
+                username = response.username,
+                channel = response.channel
             )
         }catch (e:Exception){
             UserInfoResult(error = e.message.toString())
