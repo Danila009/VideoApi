@@ -24,13 +24,20 @@ fun Routing.configureChannelRouting(){
             call.respond(response)
         }
 
-        get("{id}") {
+        get("/{id}") {
             val id = call.parameters["id"]!!.toInt()
             val response = channelController.getChannelById(id)
             call.respond(response)
         }
 
         authenticate {
+            get("/user") {
+                val principal = call.principal<JWTPrincipal>()
+                val idUser = principal!!.payload.getClaim("id").asInt()
+                val response = channelController.getChannelByUserId(idUser)
+                call.respond(response)
+            }
+
             post {
                 val principal = call.principal<JWTPrincipal>()
                 val id = principal!!.payload.getClaim("id").asInt()
@@ -39,7 +46,7 @@ fun Routing.configureChannelRouting(){
                 call.respond(HttpStatusCode.OK)
             }
 
-            delete("{id}") {
+            delete("/{id}") {
                 val principal = call.principal<JWTPrincipal>()
                 val idUser = principal!!.payload.getClaim("id").asInt()
 

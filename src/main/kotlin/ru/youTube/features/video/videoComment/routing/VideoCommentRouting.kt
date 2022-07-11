@@ -1,4 +1,4 @@
-package ru.youTube.features.videoComment.routing
+package ru.youTube.features.video.videoComment.routing
 
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -8,7 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 import ru.youTube.database.videoComment.dto.CreateVideoCommentDTO
-import ru.youTube.features.videoComment.controller.VideoCommentController
+import ru.youTube.features.video.videoComment.controller.VideoCommentController
 
 fun Routing.configureVideoCommentRouting() {
 
@@ -20,7 +20,7 @@ fun Routing.configureVideoCommentRouting() {
             call.respond(response)
         }
 
-        get("{id}") {
+        get("/{id}") {
             val id = call.parameters["id"]!!.toInt()
             val response = videoCommentController.getCommentById(id)
             call.respond(response)

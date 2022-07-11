@@ -16,6 +16,10 @@ class ChannelControllerImpl(
         return@newSuspendedTransaction dao.getChannelById(id)
     }
 
+    override suspend fun getChannelByUserId(idUser: Int): List<ChannelModel> = newSuspendedTransaction {
+        return@newSuspendedTransaction dao.getChannelByUserId(idUser)
+    }
+
     override suspend fun createChannel(channel: CreateChannelDTO, userId:Int) =
         newSuspendedTransaction {
             return@newSuspendedTransaction dao.createChannel(channel, userId)

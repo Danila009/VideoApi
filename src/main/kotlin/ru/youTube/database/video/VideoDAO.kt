@@ -5,7 +5,7 @@ import ru.youTube.database.video.model.VideoModel
 
 interface VideoDAO {
 
-    fun getVideos():List<VideoModel>
+    fun getVideos(search:String?, idGenre:Int?):List<VideoModel>
 
     fun getVideoById(id:Int):VideoModel
 

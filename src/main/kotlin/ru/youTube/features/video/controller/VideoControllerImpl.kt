@@ -10,8 +10,8 @@ class VideoControllerImpl (
     private val videoDAO:VideoDAO
 ) : VideoController {
 
-    override suspend fun getVideos(): List<VideoModel> = newSuspendedTransaction {
-        return@newSuspendedTransaction videoDAO.getVideos()
+    override suspend fun getVideos(search:String?, idGenre:Int?): List<VideoModel> = newSuspendedTransaction {
+        return@newSuspendedTransaction videoDAO.getVideos(search, idGenre)
     }
 
     override suspend fun getVideoById(id:Int): VideoModel = newSuspendedTransaction {

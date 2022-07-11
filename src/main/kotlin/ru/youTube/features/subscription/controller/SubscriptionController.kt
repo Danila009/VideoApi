@@ -1,0 +1,22 @@
+package ru.youTube.features.subscription.controller
+
+import ru.youTube.database.subscription.dto.CreateSubscriptionDTO
+import ru.youTube.database.subscription.model.SubscriptionModel
+import ru.youTube.database.subscription.model.SubscriptionUser
+
+interface SubscriptionController {
+
+    suspend fun getSubscriptionsByIdUser(idUser:Int):List<SubscriptionModel>
+
+    suspend fun getUserSubscriptionChannel(idChannel:Int):List<SubscriptionUser>
+
+    suspend fun getCheckSubscriptionChannel(idChannel:Int, idUser:Int):Boolean
+
+    suspend fun getSubscriptionsChannelTotal(idChannel: Int):Int
+
+    suspend fun getUserSubscriptionsChannelTotal(idUser: Int):Int
+
+    suspend fun addSubscription(create: CreateSubscriptionDTO, userId:Int)
+
+    suspend fun deleteSubscription(idSubscription: Int)
+}

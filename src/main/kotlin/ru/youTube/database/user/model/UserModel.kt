@@ -38,6 +38,7 @@ fun User.mapToUser():UserModel{
             UserChannelDTO(
                 id = it.id.value,
                 title = it.title,
+                icon = it.icon,
                 description = it.description
             )
         }

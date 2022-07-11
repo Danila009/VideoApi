@@ -4,5 +4,6 @@ package ru.youTube.database.user.dto
 data class UserChannelDTO(
     val id:Int,
     val title:String,
+    val icon:String,
     val description:String
 )

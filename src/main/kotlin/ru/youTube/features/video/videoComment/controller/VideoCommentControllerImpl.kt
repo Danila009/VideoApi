@@ -1,14 +1,14 @@
-package ru.youTube.features.videoComment.controller
+package ru.youTube.features.video.videoComment.controller
 
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import ru.youTube.database.videoComment.VideoCommentsDAO
 import ru.youTube.database.videoComment.dto.CreateVideoCommentDTO
 import ru.youTube.database.videoComment.model.VideoCommentModel
-import ru.youTube.features.videoComment.dto.InsertVideoCommentDto
+import ru.youTube.features.video.videoComment.dto.InsertVideoCommentDto
 
 class VideoCommentControllerImpl(
     private val dao:VideoCommentsDAO
-):VideoCommentController {
+): VideoCommentController {
 
     override suspend fun getComments(): List<VideoCommentModel> = newSuspendedTransaction {
         return@newSuspendedTransaction dao.getComments()
@@ -28,4 +28,7 @@ class VideoCommentControllerImpl(
                 }
             }
 
+    override suspend fun getCommentsByVideoId(idVideo: Int): List<VideoCommentModel> = newSuspendedTransaction {
+        return@newSuspendedTransaction dao.getCommentsByVideoId(idVideo)
+    }
 }

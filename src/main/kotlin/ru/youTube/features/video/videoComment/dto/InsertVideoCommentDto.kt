@@ -1,4 +1,4 @@
-package ru.youTube.features.videoComment.dto
+package ru.youTube.features.video.videoComment.dto
 
 @kotlinx.serialization.Serializable
 data class InsertVideoCommentDto(

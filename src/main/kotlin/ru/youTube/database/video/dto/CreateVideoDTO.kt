@@ -6,5 +6,6 @@ data class CreateVideoDTO(
     val description:String,
     val previewsUrl:String,
     val videoUrl:String,
-    val idChannel:Int
+    val idChannel:Int,
+    val idGenre:Int
 )

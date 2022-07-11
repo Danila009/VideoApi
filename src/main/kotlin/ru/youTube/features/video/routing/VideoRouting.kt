@@ -11,11 +11,13 @@ import org.koin.ktor.ext.inject
 import ru.youTube.database.video.dto.CreateVideoDTO
 import ru.youTube.features.user.controller.UserController
 import ru.youTube.features.video.controller.VideoController
+import ru.youTube.features.video.videoComment.controller.VideoCommentController
 
 fun Routing.configureVideoRouting() {
 
     val userController = inject<UserController>().value
     val videoController = inject<VideoController>().value
+    val videoCommentController = inject<VideoCommentController>().value
 
     route("/api/video"){
         authenticate {
@@ -51,13 +53,23 @@ fun Routing.configureVideoRouting() {
         }
 
         get {
-            val response = videoController.getVideos()
+            val search = call.request.queryParameters["search"]
+            val idGenre = call.request.queryParameters["idGenre"]?.toIntOrNull()
+            val response = videoController.getVideos(
+                search = search, idGenre
+            )
             call.respond(response)
         }
 
         get("/{id}") {
             val id = call.parameters["id"]!!.toInt()
             val response = videoController.getVideoById(id)
+            call.respond(response)
+        }
+
+        get("/{id}/comments") {
+            val idVideo = call.parameters["id"]!!.toInt()
+            val response = videoCommentController.getCommentsByVideoId(idVideo)
             call.respond(response)
         }
     }

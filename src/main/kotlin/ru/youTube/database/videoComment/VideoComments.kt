@@ -45,6 +45,9 @@ object VideoComments : IntIdTable("video_comments"), VideoCommentsDAO {
     }
 
     override fun getCommentsByVideoId(idVideo: Int): List<VideoCommentModel> {
-        return emptyList()
+        return selectAll().filter {
+            val comment = VideoComment[it[id]].mapToModel()
+            comment.video.id == idVideo
+        }.map { VideoComment[it[id]].mapToModel() }
     }
 }

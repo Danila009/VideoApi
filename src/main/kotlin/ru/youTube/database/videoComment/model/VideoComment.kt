@@ -21,6 +21,7 @@ fun VideoComment.mapToModel(): VideoCommentModel {
             channel = VideoCommentVideoChannel(
                 id = this.video.channel.id.value,
                 title = this.video.channel.title,
+                icon = this.video.channel.icon,
                 description = this.video.channel.description
             )
         )
@@ -49,6 +50,7 @@ data class VideoCommentVideo(
 data class VideoCommentVideoChannel(
     val id:Int,
     val title:String,
+    val icon:String,
     val description: String
 )
 

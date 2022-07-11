@@ -9,6 +9,8 @@ interface ChannelDAO {
 
     fun getChannelById(id:Int):ChannelModel
 
+    fun getChannelByUserId(idUser:Int):List<ChannelModel>
+
     fun createChannel(channel:CreateChannelDTO, userId:Int)
 
     fun deleteChannel(id:Int)
