@@ -8,8 +8,10 @@ class VideoGenreControllerImpl(
     private val dao:VideoGenreDAO
 ):VideoGenreController {
 
-    override suspend fun getGenres(): List<GenreModel> = newSuspendedTransaction {
-        return@newSuspendedTransaction dao.getGenre()
+    override suspend fun getGenres(
+        search:String?
+    ): List<GenreModel> = newSuspendedTransaction {
+        return@newSuspendedTransaction dao.getGenre(search)
     }
 
     override suspend fun getGenreById(id: Int): GenreModel = newSuspendedTransaction {

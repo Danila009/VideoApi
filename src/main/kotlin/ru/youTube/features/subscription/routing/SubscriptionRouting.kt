@@ -9,6 +9,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 import ru.youTube.database.subscription.dto.CreateSubscriptionDTO
+import ru.youTube.database.subscription.enums.SubscriptionSortingType
 import ru.youTube.features.subscription.controller.SubscriptionController
 
 fun Routing.configureSubscriptionRouting() {
@@ -33,7 +34,25 @@ fun Routing.configureSubscriptionRouting() {
             get("/user") {
                 val principal = call.principal<JWTPrincipal>()
                 val id = principal!!.payload.getClaim("id").asInt()
-                val response = subscriptionController.getSubscriptionsByIdUser(id)
+
+                val search = call.request.queryParameters["search"]
+                val pageNumber = call.request.queryParameters["pageNumber"]?.toIntOrNull() ?: 1
+                val pageSize = call.request.queryParameters["pageSize"]?.toIntOrNull() ?: 20
+                val sortingTypeRequest = call.request.queryParameters["sortingType"]
+
+                val sortingType = if(sortingTypeRequest != null)
+                    enumValueOf<SubscriptionSortingType>(sortingTypeRequest)
+                else
+                    null
+
+                val response = subscriptionController.getSubscriptionsByIdUser(
+                    idUser = id,
+                    search = search,
+                    pageSize = pageSize,
+                    pageNumber = pageNumber,
+                    sortingType = sortingType
+                )
+
                 call.respond(response)
             }
 
@@ -61,8 +80,18 @@ fun Routing.configureSubscriptionRouting() {
             }
 
             delete("/{id}") {
+                val principal = call.principal<JWTPrincipal>()
+                val idUser = principal!!.payload.getClaim("id").asInt()
                 val id = call.parameters["id"]!!.toInt()
-                subscriptionController.deleteSubscription(id)
+                subscriptionController.deleteSubscription(id, idUser)
+                call.respond(HttpStatusCode.OK)
+            }
+
+            delete("/channel/{id}") {
+                val principal = call.principal<JWTPrincipal>()
+                val idUser = principal!!.payload.getClaim("id").asInt()
+                val idChannel = call.parameters["id"]!!.toInt()
+                subscriptionController.deleteSubscriptionByIdChannel(idChannel, idUser)
                 call.respond(HttpStatusCode.OK)
             }
         }

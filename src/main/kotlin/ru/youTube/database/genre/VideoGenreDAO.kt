@@ -4,7 +4,9 @@ import ru.youTube.database.genre.model.GenreModel
 
 interface VideoGenreDAO {
 
-    suspend fun getGenre():List<GenreModel>
+    suspend fun getGenre(
+        search:String?
+    ):List<GenreModel>
 
     suspend fun getGenreById(id:Int):GenreModel
 }

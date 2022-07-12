@@ -7,10 +7,29 @@ import ru.youTube.plugins.*
 import ru.youTube.routing.configureMainRouting
 
 fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
-        DatabaseFactory.init()
+    embeddedServer(
+        Netty,
+        environment = applicationEngineEnvironment {
 
-        installPlugins()
-        configureMainRouting()
-    }.start(wait = true)
+            build {
+//                rootPath = "youTube"
+//
+//                config = ApplicationConfig(
+//                    configPath = "https://api.cfif31.ru/youTube/"
+//                )
+            }
+
+            module {
+                DatabaseFactory.init()
+
+                installPlugins()
+                configureMainRouting()
+            }
+
+            connector {
+                port = 8080
+                host = "0.0.0.0"
+            }
+        }
+    ).start(wait = true)
 }

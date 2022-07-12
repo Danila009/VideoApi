@@ -9,6 +9,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
+import ru.youTube.common.Constants.BASE_URL
 import ru.youTube.common.ConstantsPath
 import ru.youTube.common.extensions.save
 import ru.youTube.database.user.dto.AuthorizationUserDTO
@@ -38,7 +39,10 @@ fun Routing.configureUserRouting() {
                 val idUserToken = principal.payload.getClaim("id").asInt()
                     ?: return@get call.respond(HttpStatusCode.NotFound)
 
-                val file = File("file/user/photo/$idUserToken")
+                val file = File("file/user/photo/$idUserToken.jpg")
+
+                if (!file.exists())
+                    return@get call.respond(HttpStatusCode.NotFound)
 
                 call.respondFile(file)
             }
@@ -56,7 +60,12 @@ fun Routing.configureUserRouting() {
                     when(partData){
                         is PartData.FormItem -> Unit
                         is PartData.FileItem ->{
-                            partData.save(ConstantsPath.USER_IMAGES_PATH)
+                            val fileName = partData.save(ConstantsPath.USER_IMAGES_PATH)
+                            controller.updateUserPhoto(
+                                id = idUserToken,
+                                photoUrl = "$BASE_URL/api/user/photo/$fileName"
+                            )
+                            call.respond(fileName)
                         }
                         is PartData.BinaryItem -> Unit
                         is PartData.BinaryChannelItem -> Unit
@@ -68,7 +77,10 @@ fun Routing.configureUserRouting() {
         get("/photo/{id}") {
             val idUserParameter = call.parameters["id"]!!
 
-            val file = File("file/user/photo/$idUserParameter")
+            val file = File("file/user/photo/$idUserParameter.jpg")
+
+            if (!file.exists())
+                return@get call.respond(HttpStatusCode.NotFound)
 
             call.respondFile(file)
         }

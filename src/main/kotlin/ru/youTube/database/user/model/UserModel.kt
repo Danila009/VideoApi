@@ -1,26 +1,13 @@
 package ru.youTube.database.user.model
 
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import ru.youTube.database.channel.Channels
-import ru.youTube.database.channel.model.Channel
-import ru.youTube.database.user.Users
+import kotlinx.datetime.LocalDateTime
+import ru.youTube.database.user.User
 import ru.youTube.database.user.dto.UserChannelDTO
-
-class User(id: EntityID<Int>):IntEntity(id){
-    companion object : IntEntityClass<User>(Users)
-
-    var username by Users.username
-    var photo by Users.photo
-    var login by Users.login
-    var password by Users.password
-    val channel by Channel referrersOn Channels.user
-}
 
 data class UserModel(
     val id:Int,
     val username:String,
+    val dateRegistration: LocalDateTime,
     val photo:String?,
     val login:String,
     val password:String,
@@ -31,6 +18,7 @@ fun User.mapToUser():UserModel{
     return UserModel(
         id = this.id.value,
         username = this.username,
+        dateRegistration = this.dateRegistration,
         photo = this.photo,
         login = this.login,
         password = this.password,

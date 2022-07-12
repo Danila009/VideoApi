@@ -1,11 +1,13 @@
 package ru.youTube.database.videoComment.model
 
+import kotlinx.datetime.LocalDateTime
 import ru.youTube.database.videoComment.VideoComment
 
 fun VideoComment.mapToModel(): VideoCommentModel {
     return VideoCommentModel(
         id = this.id.value,
         description = this.description,
+        datePublication = this.datePublication,
         user = VideoCommentUser(
             id = this.user.id.value,
             username = this.user.username,
@@ -32,6 +34,7 @@ fun VideoComment.mapToModel(): VideoCommentModel {
 data class VideoCommentModel(
     val id:Int,
     val description:String,
+    val datePublication: LocalDateTime,
     val user:VideoCommentUser,
     val video:VideoCommentVideo
 )

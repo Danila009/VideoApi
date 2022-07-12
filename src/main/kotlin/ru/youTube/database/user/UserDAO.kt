@@ -12,4 +12,6 @@ interface UserDAO {
     fun registration(user: RegistrationUserDTO):Result<Int>
 
     fun getUserInfo(id:Int) : UserModel
+
+    fun updateUserPhoto(id: Int, photoUrl:String)
 }

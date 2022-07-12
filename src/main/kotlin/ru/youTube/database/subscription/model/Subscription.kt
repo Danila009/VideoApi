@@ -1,10 +1,12 @@
 package ru.youTube.database.subscription.model
 
+import kotlinx.datetime.LocalDateTime
 import ru.youTube.database.subscription.Subscription
 
 fun Subscription.mapToModel():SubscriptionModel{
     return SubscriptionModel(
         id = this.id.value,
+        date = this.date,
         user = SubscriptionUser(
             id = this.user.id.value,
             username = this.user.username,
@@ -22,6 +24,7 @@ fun Subscription.mapToModel():SubscriptionModel{
 @kotlinx.serialization.Serializable
 data class SubscriptionModel(
     val id:Int,
+    val date: LocalDateTime,
     val user:SubscriptionUser,
     val channel:SubscriptionChannel
 )

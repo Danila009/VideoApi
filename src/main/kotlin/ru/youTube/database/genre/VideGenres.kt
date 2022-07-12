@@ -16,8 +16,20 @@ class Genre(id: EntityID<Int>) : IntEntity(id) {
 object VideGenres : IntIdTable("genres"), VideoGenreDAO {
     val name = varchar("name", 128)
 
-    override suspend fun getGenre(): List<GenreModel> {
-        return selectAll().mapNotNull { Genre[it[id]].mapToModel() }
+    override suspend fun getGenre(
+        search:String?
+    ): List<GenreModel> {
+        return selectAll()
+            .filter {
+                val genres = Genre[it[id]].mapToModel()
+
+                search?.let {
+                    return@filter genres.name.contains(search)
+                }
+
+                true
+            }
+            .map { Genre[it[id]].mapToModel() }
     }
 
     override suspend fun getGenreById(id:Int): GenreModel {

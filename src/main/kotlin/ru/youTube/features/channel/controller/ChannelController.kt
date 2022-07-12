@@ -1,11 +1,17 @@
 package ru.youTube.features.channel.controller
 
 import ru.youTube.database.channel.dto.CreateChannelDTO
+import ru.youTube.database.channel.enums.ChannelSortingType
 import ru.youTube.database.channel.model.ChannelModel
 
 interface ChannelController {
 
-    suspend fun getChannels():List<ChannelModel>
+    suspend fun getChannels(
+        search:String? = null,
+        sortingType: ChannelSortingType? = null,
+        pageNumber:Int = 1,
+        pageSize:Int = 20
+    ):List<ChannelModel>
 
     suspend fun getChannelById(id:Int):ChannelModel
 

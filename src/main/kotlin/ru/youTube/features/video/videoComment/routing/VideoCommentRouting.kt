@@ -8,6 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 import ru.youTube.database.videoComment.dto.CreateVideoCommentDTO
+import ru.youTube.database.videoComment.enums.VideoCommentSorting
 import ru.youTube.features.video.videoComment.controller.VideoCommentController
 
 fun Routing.configureVideoCommentRouting() {
@@ -16,7 +17,22 @@ fun Routing.configureVideoCommentRouting() {
 
     route("/api/video/comment"){
         get {
-            val response = videoCommentController.getComments()
+            val search = call.request.queryParameters["search"]
+            val pageNumber = call.request.queryParameters["pageNumber"]?.toIntOrNull() ?: 1
+            val pageSize = call.request.queryParameters["pageSize"]?.toIntOrNull() ?: 20
+            val sortingTypeRequest = call.request.queryParameters["sortingType"]
+
+            val sortingType = if (sortingTypeRequest != null)
+                enumValueOf<VideoCommentSorting>(sortingTypeRequest)
+            else
+                null
+
+            val response = videoCommentController.getComments(
+                search = search,
+                pageNumber = pageNumber,
+                pageSize = pageSize,
+                sortingType = sortingType
+            )
             call.respond(response)
         }
 

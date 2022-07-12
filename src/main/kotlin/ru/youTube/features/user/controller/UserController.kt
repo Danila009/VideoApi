@@ -15,4 +15,6 @@ interface UserController {
     suspend fun getUserInfo(id:Int) : UserInfoResult
 
     suspend fun getUserPhoto(id: Int)
+
+    suspend fun updateUserPhoto(id: Int, photoUrl:String)
 }

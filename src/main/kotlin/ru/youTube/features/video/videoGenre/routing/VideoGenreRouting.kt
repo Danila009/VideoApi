@@ -13,7 +13,10 @@ fun Routing.configureVideoGenreRouting() {
     route("/api/genre"){
 
         get {
-            val response = videoGenreCollection.getGenres()
+            val search = call.request.queryParameters["search"]
+            val response = videoGenreCollection.getGenres(
+                search = search
+            )
             call.respond(response)
         }
 

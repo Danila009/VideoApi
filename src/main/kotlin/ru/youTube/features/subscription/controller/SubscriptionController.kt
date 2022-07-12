@@ -1,12 +1,19 @@
 package ru.youTube.features.subscription.controller
 
 import ru.youTube.database.subscription.dto.CreateSubscriptionDTO
+import ru.youTube.database.subscription.enums.SubscriptionSortingType
 import ru.youTube.database.subscription.model.SubscriptionModel
 import ru.youTube.database.subscription.model.SubscriptionUser
 
 interface SubscriptionController {
 
-    suspend fun getSubscriptionsByIdUser(idUser:Int):List<SubscriptionModel>
+    suspend fun getSubscriptionsByIdUser(
+        idUser:Int,
+        sortingType: SubscriptionSortingType? = null,
+        search:String? = null,
+        pageNumber:Int = 1,
+        pageSize:Int = 20
+    ):List<SubscriptionModel>
 
     suspend fun getUserSubscriptionChannel(idChannel:Int):List<SubscriptionUser>
 
@@ -18,5 +25,7 @@ interface SubscriptionController {
 
     suspend fun addSubscription(create: CreateSubscriptionDTO, userId:Int)
 
-    suspend fun deleteSubscription(idSubscription: Int)
+    suspend fun deleteSubscription(idSubscription: Int, idUser: Int)
+
+    suspend fun deleteSubscriptionByIdChannel(idChannel: Int, idUser: Int)
 }

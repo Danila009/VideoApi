@@ -24,6 +24,7 @@ class UserControllerImpl(
             val response = dao.getUserInfo(id)
             UserInfoResult(
                 login = response.login,
+                photo = response.photo,
                 username = response.username,
                 channel = response.channel
             )
@@ -68,5 +69,9 @@ class UserControllerImpl(
                     )
                 }
         }
+    }
+
+    override suspend fun updateUserPhoto(id: Int, photoUrl: String) = newSuspendedTransaction {
+        dao.updateUserPhoto(id, photoUrl)
     }
 }

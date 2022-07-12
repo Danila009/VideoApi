@@ -1,12 +1,8 @@
 package ru.youTube.database.channel.model
 
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import ru.youTube.database.channel.Channels
-import ru.youTube.database.user.model.User
-import ru.youTube.database.video.Videos
-import ru.youTube.database.video.model.Video
+import kotlinx.datetime.LocalDateTime
+import ru.youTube.database.channel.Channel
+
 
 fun Channel.mapToModel():ChannelModel {
     return ChannelModel(
@@ -14,6 +10,7 @@ fun Channel.mapToModel():ChannelModel {
         title = this.title,
         icon = this.icon,
         description = this.description,
+        datePublication = this.datePublication,
         user = ChannelUser(
             id = this.user.id.value,
             username = this.user.username,
@@ -56,16 +53,7 @@ data class ChannelModel(
     val title:String,
     val icon:String,
     val description:String,
+    val datePublication: LocalDateTime,
     val user:ChannelUser,
     val videos:List<ChannelVideoModel>
 )
-
-class Channel(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<Channel>(Channels)
-
-    var title by Channels.title
-    var description by Channels.description
-    var icon by Channels.icon
-    val videos  by Video referrersOn Videos.channel
-    var user by User referencedOn Channels.user
-}

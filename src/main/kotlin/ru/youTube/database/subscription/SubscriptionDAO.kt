@@ -1,12 +1,19 @@
 package ru.youTube.database.subscription
 
 import ru.youTube.database.subscription.dto.CreateSubscriptionDTO
+import ru.youTube.database.subscription.enums.SubscriptionSortingType
 import ru.youTube.database.subscription.model.SubscriptionModel
 import ru.youTube.database.subscription.model.SubscriptionUser
 
 interface SubscriptionDAO {
 
-    fun getSubscriptionsByIdUser(idUser:Int):List<SubscriptionModel>
+    fun getSubscriptionsByIdUser(
+        idUser:Int,
+        sortingType: SubscriptionSortingType?,
+        search:String?,
+        pageNumber:Int,
+        pageSize:Int
+    ):List<SubscriptionModel>
 
     fun getUserSubscriptionChannel(idChannel:Int):List<SubscriptionUser>
 
@@ -18,5 +25,7 @@ interface SubscriptionDAO {
 
     fun addSubscription(create: CreateSubscriptionDTO, userId:Int)
 
-    fun deleteSubscription(idSubscription: Int)
+    fun deleteSubscriptionById(idSubscription: Int, idUser: Int)
+
+    fun deleteSubscriptionByIdChannel(idChannel: Int, idUser: Int)
 }

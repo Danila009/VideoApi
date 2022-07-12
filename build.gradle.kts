@@ -35,10 +35,14 @@ dependencies {
     //Serialization
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
 
+    //Datetime
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+
     //Exposed
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposed_version")
 
     //SQL connector
     implementation("mysql:mysql-connector-java:8.0.29")
@@ -53,4 +57,8 @@ dependencies {
     //Testing
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+}
+
+tasks.create("stage") {
+    dependsOn("installDist")
 }
