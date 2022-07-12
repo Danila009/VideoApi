@@ -1,5 +1,3 @@
-# YouTube API
-
 ## Documentations
 
 + ### [V1][documentation_v1]

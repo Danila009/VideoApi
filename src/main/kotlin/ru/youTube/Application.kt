@@ -12,10 +12,10 @@ fun main() {
         environment = applicationEngineEnvironment {
 
             build {
-//                rootPath = "youTube"
+//                rootPath = ""
 //
 //                config = ApplicationConfig(
-//                    configPath = "https://api.cfif31.ru/youTube/"
+//                    configPath = ""
 //                )
             }
 
