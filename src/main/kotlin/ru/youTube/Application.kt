@@ -6,16 +6,18 @@ import ru.youTube.database.DatabaseFactory
 import ru.youTube.plugins.*
 import ru.youTube.routing.configureMainRouting
 
+const val BASE_URL = "https://api.cfif31.ru/youTube"
+
 fun main() {
     embeddedServer(
         Netty,
         environment = applicationEngineEnvironment {
 
             build {
-//                rootPath = ""
+//                rootPath = BASE_URL
 //
 //                config = ApplicationConfig(
-//                    configPath = ""
+//                    configPath = BASE_URL
 //                )
             }
 

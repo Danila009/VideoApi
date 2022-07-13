@@ -38,6 +38,12 @@ dependencies {
     //Datetime
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
+    //CORS
+    implementation("io.ktor:ktor-server-cors:$ktor_version")
+
+    // Websocket
+    implementation("io.ktor:ktor-server-websockets:$ktor_version")
+
     //Exposed
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")

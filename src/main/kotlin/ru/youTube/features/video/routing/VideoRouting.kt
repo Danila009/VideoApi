@@ -8,8 +8,10 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.websocket.*
+import io.ktor.websocket.*
 import org.koin.ktor.ext.inject
-import ru.youTube.common.Constants.BASE_URL
+import ru.youTube.BASE_URL
 import ru.youTube.common.ConstantsPath.VIDEO_PREVIEWS_PATH
 import ru.youTube.common.ConstantsPath.VIDEO_VIDEO_PATH
 import ru.youTube.common.extensions.save
@@ -154,6 +156,41 @@ fun Routing.configureVideoRouting() {
                 sortingType = sortingType
             )
             call.respond(response)
+        }
+
+        webSocket("/comments") {
+            send("Please enter id video")
+
+            val search = call.request.queryParameters["search"]
+            val pageNumber = call.request.queryParameters["pageNumber"]?.toIntOrNull() ?: 1
+            val pageSize = call.request.queryParameters["pageSize"]?.toIntOrNull() ?: 20
+            val sortingTypeRequest = call.request.queryParameters["sortingType"]
+
+            val sortingType = if(sortingTypeRequest != null)
+                enumValueOf<VideoCommentSorting>(sortingTypeRequest)
+            else
+                null
+
+            for (frame in incoming){
+
+                if(frame is Frame.Text){
+                    val idVideo = frame.readText()
+
+                    val response = videoCommentController.getCommentsByVideoId(
+                        idVideo = idVideo.toIntOrNull() ?: 0,
+                        search = search,
+                        pageNumber = pageNumber,
+                        pageSize = pageSize,
+                        sortingType = sortingType
+                    )
+
+                    if (idVideo.equals("bye", ignoreCase = true)) {
+                        close(CloseReason(CloseReason.Codes.NORMAL, "Client said BYE"))
+                    } else {
+                        sendSerialized(response)
+                    }
+                }
+            }
         }
     }
 }

@@ -6,4 +6,6 @@ fun Application.installPlugins(){
     configureAuthentication()
     configureKtorDI()
     configureSerialization()
+    configureWebSockets()
+    configureCORS()
 }

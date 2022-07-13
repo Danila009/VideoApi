@@ -9,7 +9,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
-import ru.youTube.common.Constants.BASE_URL
+import ru.youTube.BASE_URL
 import ru.youTube.common.ConstantsPath
 import ru.youTube.common.extensions.save
 import ru.youTube.database.user.dto.AuthorizationUserDTO

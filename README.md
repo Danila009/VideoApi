@@ -2,4 +2,4 @@
 
 + ### [V1][documentation_v1]
 
-[documentation_v1]: documentations/v1/documentation.json
+[documentation_v1]: documentations/v1/documentation_v1.json
