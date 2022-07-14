@@ -16,7 +16,7 @@ fun Routing.configureSubscriptionRouting() {
 
     val subscriptionController = inject<SubscriptionController>().value
 
-    route("/api/subscription") {
+    route("/youTube/api/subscription") {
 
         get("/channel/{id}") {
             val idChannel = call.parameters["id"]!!.toInt()

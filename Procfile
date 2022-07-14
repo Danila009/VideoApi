@@ -1,1 +1,1 @@
-web: ./build/install/ru.youTube.youTube-backend/bin/ru.youTube.youTube-backend
+web: ./build/install/ru.youTube.you-tube-api/bin/ru.youTube.you-tube-api

@@ -23,7 +23,7 @@ fun Routing.configureChannelRouting(){
     val channelController = inject<ChannelController>().value
     val userController = inject<UserController>().value
 
-    route("/api/channel"){
+    route("/youTube/api/channel"){
 
         get {
             val search = call.request.queryParameters["search"]

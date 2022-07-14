@@ -15,7 +15,7 @@ fun Routing.configureVideoCommentRouting() {
 
     val videoCommentController = inject<VideoCommentController>().value
 
-    route("/api/video/comment"){
+    route("/youTube/api/video/comment"){
         get {
             val search = call.request.queryParameters["search"]
             val pageNumber = call.request.queryParameters["pageNumber"]?.toIntOrNull() ?: 1

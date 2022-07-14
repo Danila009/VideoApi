@@ -29,7 +29,7 @@ fun Routing.configureVideoRouting() {
     val videoController = inject<VideoController>().value
     val videoCommentController = inject<VideoCommentController>().value
 
-    route("/api/video"){
+    route("/youTube/api/video"){
         authenticate {
             post {
                 val video = call.receive<CreateVideoDTO>()

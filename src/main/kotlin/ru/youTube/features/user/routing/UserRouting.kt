@@ -21,7 +21,7 @@ fun Routing.configureUserRouting() {
 
     val controller = inject<UserController>().value
 
-    route("/api/user"){
+    route("/youTube/api/user"){
 
         authenticate {
             get("/info") {

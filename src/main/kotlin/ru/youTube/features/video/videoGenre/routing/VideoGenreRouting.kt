@@ -10,7 +10,7 @@ fun Routing.configureVideoGenreRouting() {
 
     val videoGenreCollection = inject<VideoGenreController>().value
 
-    route("/api/genre"){
+    route("/youTube/api/genre"){
 
         get {
             val search = call.request.queryParameters["search"]

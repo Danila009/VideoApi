@@ -4,10 +4,17 @@ val logback_version: String by project
 val exposed_version: String by project
 val koin_version:String by project
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
 plugins {
     application
     kotlin("jvm") version "1.7.10"
     kotlin("plugin.serialization") version "1.7.10"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+
 }
 
 group = "ru.youTube"
@@ -15,8 +22,12 @@ version = "0.0.1"
 application {
     mainClass.set("ru.youTube.ApplicationKt")
 
+  //  mainClass.set("io.ktor.server.netty.EngineMain")
+
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+
+
 }
 
 repositories {

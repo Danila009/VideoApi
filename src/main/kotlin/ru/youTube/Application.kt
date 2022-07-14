@@ -29,7 +29,7 @@ fun main() {
             }
 
             connector {
-                port = 8080
+                port = 5008//Не - явно не такой
                 host = "0.0.0.0"
             }
         }
